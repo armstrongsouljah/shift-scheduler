@@ -136,6 +136,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         )
         return token
 
+    @property
     def token(self):
         """This method allows us to get users' token by calling 'user.token'"""
         return self.generate_jwt_token()
