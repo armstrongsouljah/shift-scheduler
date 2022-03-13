@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_swagger',
+    'whitenoise',
     'authentication',
-    'profiles'
+    'profiles',
+    'sheduleit'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'scheduleme.urls'
@@ -59,7 +64,9 @@ ROOT_URLCONF = 'scheduleme.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,6 +92,13 @@ DATABASES = {
     'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
+REST_FRAMEWORK = {
+   'EXCEPTION_HANDLER': 'core.exceptions.core_exception_handler',
+   'NON_FIELD_ERRORS_KEY': 'error',
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+       'authentication.backends.JWTAuthentication',
+   ),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -121,6 +135,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

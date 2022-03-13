@@ -8,3 +8,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('first_name', 'last_name', 'phone', 'user',)
         read_only_fields = ('user',)
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'phone', )
