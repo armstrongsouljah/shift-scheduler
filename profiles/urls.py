@@ -6,5 +6,5 @@ from .views import (
 
 urlpatterns = [
     path('', UserProfileListView.as_view(), name='profiles'),
-    path('update', UserProfileUpdateView.as_view(), name='update-view')
+    path('<pk>/update', UserProfileUpdateView.as_view(), name='update-view')
 ]

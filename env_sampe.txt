@@ -1,0 +1,4 @@
+DEBUG=True
+SECRET_KEY='your key'
+ALLOWED_HOSTS='preferrably .localhost,'
+DATABASE_URL='postgresql://uri'

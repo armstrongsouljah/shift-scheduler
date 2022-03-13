@@ -31,4 +31,5 @@ urlpatterns = [
         template_name='documentation.html',
         extra_context={'schema_url':'openapi-schema'}
     ), name='swagger-ui'),
+    path('schedules/', include('sheduleit.urls'))
 ]
